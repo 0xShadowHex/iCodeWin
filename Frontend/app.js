@@ -841,18 +841,8 @@ class MonacoEditorApp {
     }
 
     getDefaultJsContent() {
-        return `document.addEventListener('DOMContentLoaded', () => {
-    const title = document.querySelector('h1');
-    if (title) {
-        title.style.cursor = 'pointer';
-        title.addEventListener('click', () => {
-            alert('Welcome to setup!');
-        });
-    }
-});
-
-//function from notification.js lib, schedules push notification in 11 secs with message "Hello World" 
-push(11, "Hello World");`;
+        return `//waits 7 seconds, then sends a push notification "Greetings from myself" if app not curently opened
+push(7, "Greetings from 0xShadowHex");`;
     }
 
     setupEventListeners() {
