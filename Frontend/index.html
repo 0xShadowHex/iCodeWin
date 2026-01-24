@@ -870,6 +870,97 @@
             font-family: Arial, Helvetica, sans-serif;
             font-weight: bold;
         }
+            :root {
+      --bg: #0a0a0a;
+      --text: #e0e0e0;
+      --text-muted: #aaaaaa;
+      --modal-bg: #121212;
+      --border: #222222;
+      --accent: dodgerblue;
+      --accent-hover: #1e90ff;
+    }
+
+    /* ────────────────────────────────────────
+       NOTIFICATION / MODAL STYLES
+    ──────────────────────────────────────── */
+    .welcome-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .welcome-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .welcome-modal {
+      background: var(--modal-bg);
+      border: 1px solid var(--border);
+      padding: 2.2rem 2rem;
+      width: 90%;
+      max-width: 440px;
+      box-shadow: 0 25px 60px -15px rgba(0,0,0,0.6);
+      text-align: center;
+      transform: scale(0.92);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .welcome-overlay.show .welcome-modal {
+      transform: scale(1);
+    }
+
+    .welcome-modal h2 {
+      color: var(--accent);
+      font-size: 2rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .welcome-modal p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1.08rem;
+    }
+
+    .welcome-modal button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.95rem 2.8rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .welcome-modal button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      filter: brightness(75%);
+    }
+
+    .welcome-modal button:active {
+      transform: translateY(0);
+    }
+    ul.list{
+        text-align: left;
+        margin-left: 40px;
+        margin-bottom: 30px;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .paragraph{
+        text-align: left;
+        font-family: Arial, Helvetica, sans-serif;
+    }
     </style>
 </head>
 
@@ -974,6 +1065,59 @@
     <!-- Monaco Editor CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
     <script src="app.js"></script>
+      <div id="welcome-notif" class="welcome-overlay">
+    <div class="welcome-modal">
+      <h2>Release Notes v0.0.2</h2>
+      <p class="paragraph">We are exited to announce following changes in the development of our cross-platform IDE:</p>
+      <ul class="list">
+        <li>Fixed vh for default in-app display</li>
+        <li>Added push notification support</li>
+      </ul>
+      <p class="paragraph">You may soon expect the following updates soon</p>
+      <ul class="list">
+        <li>Camera support</li>
+      </ul>
+      <button id="got-it-btn">Got it</button>
+    </div>
+  </div>
+
+  <script>
+    const VERSION = "v0.0.2";
+    const STORAGE_KEY = "welcome-seen-version";
+
+    const overlay = document.getElementById("welcome-notif");
+    const btn = document.getElementById("got-it-btn");
+
+    function hasSeenCurrentVersion() {
+      return localStorage.getItem(STORAGE_KEY) === VERSION;
+    }
+
+    function markAsSeen() {
+      localStorage.setItem(STORAGE_KEY, VERSION);
+    }
+
+    function show() {
+      overlay.classList.add("show");
+    }
+
+    function hide() {
+      overlay.classList.remove("show");
+      // Optional: clean up DOM after animation
+      setTimeout(() => overlay.remove(), 600);
+    }
+
+    // ─── Main logic ────────────────────────────────────────
+    if (!hasSeenCurrentVersion()) {
+      show();
+
+      btn.addEventListener("click", () => {
+        markAsSeen();
+        hide();
+      }, { once: true });
+    } else {
+      overlay.remove();
+    }
+  </script>
 </body>
 
 </html>
