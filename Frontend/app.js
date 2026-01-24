@@ -810,10 +810,10 @@ class MonacoEditorApp {
     <div class="container">
         <h1 class="welcome-screen">hello</h1>
     </div>
-    <script src="../js/script.js"></script>
 
-    <!-- Link notification library to app, for photo etc use input-->
+    <!-- Link notification library to app, for photo etc use input until next update-->
     <script src="../js/notification.js"></script>
+    <script src="../js/script.js"></script>
 </body>
 
 </html>`;
