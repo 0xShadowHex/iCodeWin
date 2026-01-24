@@ -825,7 +825,7 @@ class MonacoEditorApp {
     margin: 0;
     padding: 20px;
     background: linear-gradient(135deg, #002fff 0%, #cc0099 100%);
-    min-height: 96vh;
+    min-height: 95.5vh;
     color: white;
     display: flex;
     align-items: center;
