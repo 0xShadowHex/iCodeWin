@@ -6,8 +6,6 @@
 
 Build iOS apps directly in your browser on Windows and Linux platforms. iCodeWin provides a complete web-based IDE for iOS app development without requiring a Mac.
 
-![iCodeWin Preview](https://via.placeholder.com/800x400?text=iCodeWin+Screenshot)
-
 ## 📋 Overview
 
 iCodeWin revolutionizes iOS app development by eliminating the need for Mac hardware. This browser-based IDE allows developers on Windows and Linux to create, test, and build iOS applications with a live preview that updates in real-time as you code.
