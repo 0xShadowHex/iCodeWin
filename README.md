@@ -62,6 +62,7 @@ iCodeWin is currently **In Development**. New features and improvements are bein
 
 - Enhancing build logs precision
 - Enhancing build speed on backend
+- Windows Desktop Application
 
 ## 👥 Contributing
 
