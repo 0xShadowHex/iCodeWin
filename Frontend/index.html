@@ -1076,59 +1076,6 @@
     <!-- Monaco Editor CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
     <script src="app.js"></script>
-      <div id="welcome-notif" class="welcome-overlay">
-    <div class="welcome-modal">
-      <h2>Release Notes v0.0.2</h2>
-      <p class="paragraph">We are exited to announce following changes in the development of our cross-platform IDE:</p>
-      <ul class="list">
-        <li>Fixed vh for default in-app display</li>
-        <li>Added push notification support</li>
-      </ul>
-      <p class="paragraph">You may soon expect the following updates soon</p>
-      <ul class="list">
-        <li>Camera support</li>
-      </ul>
-      <button id="got-it-btn">Got it</button>
-    </div>
-  </div>
-
-  <script>
-    const VERSION = "v0.0.2";
-    const STORAGE_KEY = "welcome-seen-version";
-
-    const overlay = document.getElementById("welcome-notif");
-    const btn = document.getElementById("got-it-btn");
-
-    function hasSeenCurrentVersion() {
-      return localStorage.getItem(STORAGE_KEY) === VERSION;
-    }
-
-    function markAsSeen() {
-      localStorage.setItem(STORAGE_KEY, VERSION);
-    }
-
-    function show() {
-      overlay.classList.add("show");
-    }
-
-    function hide() {
-      overlay.classList.remove("show");
-      // Optional: clean up DOM after animation
-      setTimeout(() => overlay.remove(), 600);
-    }
-
-    // ─── Main logic ────────────────────────────────────────
-    if (!hasSeenCurrentVersion()) {
-      show();
-
-      btn.addEventListener("click", () => {
-        markAsSeen();
-        hide();
-      }, { once: true });
-    } else {
-      overlay.remove();
-    }
-  </script>
 </body>
 
 </html>
