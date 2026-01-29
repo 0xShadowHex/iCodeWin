@@ -1,4 +1,3 @@
-// Monaco Editor Application with Dashboard and Drag-and-Drop
 class MonacoEditorApp {
     constructor() {
         this.editor = null;
@@ -26,7 +25,6 @@ class MonacoEditorApp {
         this.setupEventListeners();
     }
 
-    // ===== DASHBOARD FUNCTIONS =====
     loadProjects() {
         const stored = localStorage.getItem('iCodeWinProjects');
         this.projects = stored ? JSON.parse(stored) : [];
@@ -46,7 +44,6 @@ class MonacoEditorApp {
         const projectsContainer = document.getElementById('dashboardProjects');
         projectsContainer.innerHTML = '';
 
-        // Add create project button
         const createCard = document.createElement('div');
         createCard.className = 'create-project-card';
         createCard.onclick = () => this.createNewProject();
@@ -56,7 +53,6 @@ class MonacoEditorApp {
         `;
         projectsContainer.appendChild(createCard);
 
-        // Add existing projects
         this.projects.forEach(project => {
             const card = document.createElement('div');
             card.className = 'project-card';
@@ -96,7 +92,6 @@ class MonacoEditorApp {
             projectsContainer.appendChild(card);
         });
 
-        // Add hidden file input for icon upload if it doesn't exist
         if (!document.getElementById('iconUploadInput')) {
             const input = document.createElement('input');
             input.type = 'file';
@@ -144,7 +139,6 @@ class MonacoEditorApp {
             }
         };
 
-        // Add default files
         newProject.files.html['index.html'] = this.getDefaultHtmlContent('index.html');
         newProject.files.css['style.css'] = this.getDefaultCssContent();
         newProject.files.js['script.js'] = this.getDefaultJsContent();
@@ -165,7 +159,6 @@ class MonacoEditorApp {
             js: Object.keys(project.files.js || {})
         };
 
-        // Load files into openTabs
         this.openTabs.clear();
         Object.entries(project.files.html).forEach(([filename, content]) => {
             const fileKey = `html/${filename}`;
@@ -198,7 +191,6 @@ class MonacoEditorApp {
             });
         });
 
-        // Show editor
         document.getElementById('dashboardContainer').classList.remove('active');
         document.getElementById('appContainer').classList.add('active');
         document.getElementById('projectTitle').textContent = project.name;
@@ -231,7 +223,6 @@ class MonacoEditorApp {
         this.showDashboard();
     }
 
-    // ===== DRAG AND DROP FUNCTIONS =====
     setupDragAndDrop() {
         const wrapper = document.getElementById('editorWrapper');
         const overlay = document.getElementById('dragOverlay');
@@ -283,18 +274,15 @@ class MonacoEditorApp {
     addFileToProject(folderType, filename, content) {
         if (!this.currentProject) return;
 
-        // Check if file already exists
         if (this.currentProject.files[folderType][filename]) {
             if (!confirm(`File ${filename} already exists. Overwrite?`)) {
                 return;
             }
         }
 
-        // Add to project
         this.currentProject.files[folderType][filename] = content;
         this.projectStructure[folderType] = Object.keys(this.currentProject.files[folderType]);
 
-        // Add to openTabs
         const fileKey = `${folderType}/${filename}`;
         this.openTabs.set(fileKey, {
             folder: folderType,
@@ -303,16 +291,13 @@ class MonacoEditorApp {
             modified: false,
             language: folderType === 'html' ? 'html' : (folderType === 'css' ? 'css' : 'javascript')
         });
-
-        // Save to localStorage
+        
         this.saveProjects();
 
-        // Update UI
         this.renderProjectTree();
         this.openFile(folderType, filename);
     }
 
-    // ===== EDITOR FUNCTIONS =====
     async loadMonacoEditor() {
         if (this.editor) return;
 
@@ -573,7 +558,6 @@ class MonacoEditorApp {
     updatePreview() {
         if (!this.currentProject) return;
 
-        // Find the main HTML file (index.html or the first available HTML file)
         const htmlFiles = this.currentProject.files.html;
         const htmlFilenames = Object.keys(htmlFiles);
         if (htmlFilenames.length === 0) return;
@@ -943,7 +927,6 @@ push(7, "Greetings from 0xShadowHex");`;
     }
 }
 
-// Global functions for context menu
 function closeModal() {
     app.closeModal();
 }
@@ -952,7 +935,6 @@ function confirmModal() {
     app.confirmModal();
 }
 
-// Initialize the application
 let app;
 document.addEventListener('DOMContentLoaded', () => {
     app = new MonacoEditorApp();
@@ -994,7 +976,6 @@ downloadbutton.addEventListener("click", async function () {
         return;
     }
 
-    // Save current file before downloading
     if (app.currentFile) {
         app.saveFileContent();
     }
@@ -1004,11 +985,9 @@ downloadbutton.addEventListener("click", async function () {
     try {
         const backendUrl = "https://ipa-generator-backend-production.up.railway.app/generate-ipa";
 
-        // Prepare files object: { "html/index.html": "content", ... }
         const filesToUpload = {};
         const project = app.currentProject;
 
-        // Collect all files from the project
         Object.entries(project.files.html).forEach(([name, content]) => {
             filesToUpload[`html/${name}`] = content;
         });
@@ -1079,4 +1058,3 @@ function runSequence() {
         }, 400);
     }, 1800);
 }
-// Removed duplicate listener as it's now integrated above
