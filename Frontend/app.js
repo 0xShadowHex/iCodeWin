@@ -954,7 +954,7 @@ window.addEventListener('load', () => {
     }
 });
 
-const mq = window.matchMedia("(max-width: 480px)");
+const mq = window.matchMedia("(max-width: 750px)");
 
 function checkSize(e) {
     if (e.matches) {
