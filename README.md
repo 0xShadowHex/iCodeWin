@@ -64,6 +64,11 @@ iCodeWin is currently **In Development**. New features and improvements are bein
 - Enhancing build speed on backend
 - Windows Desktop Application
 
+### Recently fixed:
+
+- Javascript not working bug
+- LocalStorage not working bug
+
 ## 👥 Contributing
 
 We welcome contributions to make iCodeWin even better!
