@@ -983,7 +983,7 @@ downloadbutton.addEventListener("click", async function () {
     runSequence();
 
     try {
-        const backendUrl = "https://ipa-generator-backend-production.up.railway.app/generate-ipa";
+        const backendUrl = "https://web-production-e39a6.up.railway.app/generate-ipa";
 
         const filesToUpload = {};
         const project = app.currentProject;
