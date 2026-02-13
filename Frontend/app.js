@@ -1063,3 +1063,4 @@ function runSequence() {
         }, 400);
     }, 1800);
 }
+document.querySelector('.editor-container').setAttribute('translate', 'no'); 
