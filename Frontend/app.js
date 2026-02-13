@@ -1066,23 +1066,7 @@ function runSequence() {
 
 document.querySelector('.editor-container').setAttribute('translate', 'no'); 
 
-const observer = new MutationObserver((mutations) => {
-  mutations.forEach((mutation) => {
-    mutation.addedNodes.forEach((node) => {
-      if (node.nodeType === 1) {
-        if (node.tagName.toLowerCase() === 'font') {
-          node.setAttribute('translate', 'no');
-        }
-        node.querySelectorAll && node.querySelectorAll('font').forEach(el => {
-          el.setAttribute('translate', 'no');
-          el.classList.add('notranslate');
-        });
-      }
-    });
-  });
-});
-
-observer.observe(document.body, {
-  childList: true,
-  subtree: true
+document.querySelectorAll('.project-card').forEach(el => {
+  el.setAttribute('translate', 'no');
+  el.classList.add('notranslate');
 });
