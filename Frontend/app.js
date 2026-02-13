@@ -1063,8 +1063,25 @@ function runSequence() {
         }, 400);
     }, 1800);
 }
+
 document.querySelector('.editor-container').setAttribute('translate', 'no'); 
 
-document.querySelectorAll('font').forEach(el => {
-  el.setAttribute('translate', 'no');
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    mutation.addedNodes.forEach((node) => {
+      if (node.nodeType === 1) {
+        if (node.tagName.toLowerCase() === 'font') {
+          node.setAttribute('translate', 'no');
+        }
+        node.querySelectorAll && node.querySelectorAll('font').forEach(el => {
+          el.setAttribute('translate', 'no');
+        });
+      }
+    });
+  });
+});
+
+observer.observe(document.body, {
+  childList: true,
+  subtree: true
 });
