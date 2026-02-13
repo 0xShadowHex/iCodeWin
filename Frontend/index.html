@@ -964,6 +964,27 @@
         text-align: left;
         font-family: Arial, Helvetica, sans-serif;
     }
+    .credits-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .scarlet-icon{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 15px;
+        border: 2px solid crimson;
+    }
+    .scarlet-partner{
+        display: flex;
+        align-items: center;
+    }
+    .link-attribution{
+        margin-left: 5px;
+        margin-right: 5px;
+    }
     </style>
 </head>
 
@@ -982,7 +1003,8 @@
                 <div class="create-project-label">New Project</div>
             </div>
         </div>
-        <footer class="credits-info">iPhone preview is for reference only, no SDK, also I would like to thank <a class="link-attribution" href="https://github.com/nab138/CrossCode" target="_blank" rel="noopener noreferrer">@nab138</a> for the wrapper. You may use the output .ipa under the <a class="link-attribution" href="https://creativecommons.org/public-domain/cc0/" target="_blank" rel="noopener noreferrer">Creative Commons Zero</a> License. Edit app name/icon here:<a class="link-attribution" href="https://github.com/binnichtaktiv/iPA-Edit" target="_blank" rel="noopener noreferrer">IPAedit</a></footer>
+ <footer class="credits-info"><div class="overwrap">iPhone preview is for reference only, no SDK, also I would like to thank <a class="link-attribution" href="https://github.com/nab138/CrossCode" target="_blank" rel="noopener noreferrer">@nab138</a> for the wrapper. You may use the output .ipa under the <a class="link-attribution" href="https://creativecommons.org/public-domain/cc0/" target="_blank" rel="noopener noreferrer">Creative Commons Zero</a> License.</div> <div class="scarlet-partner"><img class="scarlet-icon" src="./ressources/scarlet-partner.png" alt="">Official partner of <a class="link-attribution" href="https://sideload.pages.dev/" target="_blank" rel="noopener noreferrer"> Scarlet</a></div>
+</footer>
     </div>
 
     <div class="app-container" id="appContainer">
