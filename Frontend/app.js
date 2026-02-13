@@ -1026,7 +1026,12 @@ downloadbutton.addEventListener("click", async function () {
         show("Download started!");
     } catch (error) {
         console.error('Error downloading IPA:', error);
-        show("Error: " + error.message);
+
+        if (error.message === "Failed to fetch") {
+            show("Error: Unstable internet");
+        } else {
+            show("Error: " + error.message);
+        }
     }
 })
 const notification = document.getElementById('notification');
