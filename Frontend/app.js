@@ -1064,7 +1064,8 @@ function runSequence() {
     }, 1800);
 }
 
-document.querySelector('.editor-container').setAttribute('translate', 'no'); 
+document.querySelector('.editor-container').setAttribute('translate', 'no');
+document.querySelector('.editor-title').setAttribute('translate', 'no');
 
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
