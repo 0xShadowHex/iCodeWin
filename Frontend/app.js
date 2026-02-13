@@ -1075,6 +1075,7 @@ const observer = new MutationObserver((mutations) => {
         }
         node.querySelectorAll && node.querySelectorAll('font').forEach(el => {
           el.setAttribute('translate', 'no');
+          el.classList.add('notranslate');
         });
       }
     });
