@@ -1066,7 +1066,24 @@ function runSequence() {
 
 document.querySelector('.editor-container').setAttribute('translate', 'no'); 
 
-document.querySelectorAll('.project-card').forEach(el => {
-  el.setAttribute('translate', 'no');
-  el.classList.add('notranslate');
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    mutation.addedNodes.forEach((node) => {
+      if (node.nodeType === 1) {
+        if (node.classList.contains('project-card')) {
+          node.setAttribute('translate', 'no');
+          node.classList.add('notranslate');
+        }
+        node.querySelectorAll && node.querySelectorAll('.project-card').forEach(el => {
+          el.setAttribute('translate', 'no');
+          el.classList.add('notranslate');
+        });
+      }
+    });
+  });
+});
+
+observer.observe(document.body, {
+  childList: true,
+  subtree: true
 });
