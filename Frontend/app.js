@@ -983,7 +983,7 @@ downloadbutton.addEventListener("click", async function () {
     runSequence();
 
     try {
-        const backendUrl = "https://web-production-e39a6.up.railway.app/generate-ipa";
+        const backendUrl = "https://raw-karissa-privateuseforhobby-72d26d1a.koyeb.app/generate-ipa";
 
         const filesToUpload = {};
         const project = app.currentProject;
