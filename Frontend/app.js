@@ -983,7 +983,7 @@ downloadbutton.addEventListener("click", async function () {
     runSequence();
 
     try {
-        const backendUrl = "https://ipa-generator-backend.containers.snapdeploy.dev/generate-ipa";
+        const backendUrl = "https://persistent-hosting--nipanzuzuzu587.replit.app/generate-ipa";
 
         const filesToUpload = {};
         const project = app.currentProject;
