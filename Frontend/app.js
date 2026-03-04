@@ -1166,7 +1166,7 @@ async function aiGenerate() {
                 // Persist into project files
                 app.saveFileContent();
                 app.updatePreview();
-                show('AI done ✓', 2000);
+                show('Generation completed!', 2000);
                 input.value = '';
             }
         }
