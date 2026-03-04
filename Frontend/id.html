@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iCodeWin Assets</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="./ressources/background-overlay.jpg" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">iCodeWin Assets Manager</h1>
+                <p class="tagline">Free. Fast. Simple.</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="upload-box">
+                    <h2>Upload Images</h2>
+                    <p>Drag images here or click to select</p>
+                    
+                    <input 
+                        type="file" 
+                        id="fileInput" 
+                        accept="image/*" 
+                        multiple
+                        class="file-input"
+                    >
+                    <button id="uploadBtn" class="upload-button">
+                        Select Image
+                    </button>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-number" id="imageCount">0</div>
+                    <div class="stat-label">Images Stored</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="storageUsage">0</div>
+                    <div class="stat-label">Storage Used</div>
+                </div>
+            </section>
+
+            <!-- Gallery Section -->
+            <section class="gallery-section">
+                <h2 class="gallery-title">Your Images</h2>
+                <div id="gallery" class="gallery">
+                    <div class="empty-state">
+                        <p>No images uploaded yet</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy;2026 iCodeWin by ShadowHex</p>
+        </footer>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <img id="previewImage" src="" alt="Preview">
+            <div class="modal-info">
+                <p id="imageName"></p>
+                <input type="text" id="imageUrl" class="image-url-input" readonly>
+                <button id="copyUrlBtn" class="copy-button">Copy URL</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
