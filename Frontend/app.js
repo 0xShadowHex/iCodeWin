@@ -1170,7 +1170,8 @@ async function aiGenerate() {
             `Output must start directly with the first line of ${langName} code.` +
             `Keep the code minimal and optimized for an iOS mobile webview wrapper while keeping a dymanic layout. IMPORTANT!!!` +
             `Avoid AI slop aesthetics.` +
-            `Strictly keep the code under the length of 70 lines. Embrace minimalism.`;
+            `Strictly keep the code under the length of 70 lines. Embrace minimalism.` +
+            `Include the notification script tag written as a literal HTML script element with src="../js/notification.js" placed before any other scripts when push notifications are used, and use push(seconds, "message"); only without redefining it, invoke only when user asks for push notifications`;
 
         const response = await fetch('https://freeaiapi-k79wwbhb.manus.space/api/chat', {
             method: 'POST',
