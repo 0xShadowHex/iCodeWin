@@ -1167,9 +1167,12 @@ async function aiGenerate() {
         const systemPrompt =
             `You are an expert ${langName} developer. ` +
             `Respond with ONLY raw ${langName} code — no markdown fences, no backticks, no explanation. ` +
-            `Output must start directly with the first line of ${langName} code.`;
+            `Output must start directly with the first line of ${langName} code.` +
+            `Keep the code minimal and optimized for an iOS mobile webview wrapper while keeping a dymanic layout. IMPORTANT!!!` +
+            `Avoid AI slop aesthetics.` +
+            `Strictly keep the code under the length of 70 lines. Embrace minimalism.`;
 
-        const response = await fetch('https://text.pollinations.ai/openai', {
+        const response = await fetch('https://freeaiapi-k79wwbhb.manus.space/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
