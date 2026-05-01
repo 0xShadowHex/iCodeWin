@@ -153,6 +153,7 @@ class MonacoEditorApp {
     }
 
     openProject(projectId) {
+        aiResetHistory(); // new project = fresh context
         const project = this.projects.find(p => p.id === projectId);
         if (!project) return;
 
@@ -514,6 +515,7 @@ class MonacoEditorApp {
     }
 
     openFile(folderType, filename) {
+        aiResetHistory(); // new file = fresh context
         const fileKey = `${folderType}/${filename}`;
 
         if (!this.openTabs.has(fileKey)) {
@@ -1140,6 +1142,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// ── Conversation memory (max 7 turns) ──────────────────────────────────────
+const AI_MAX_TURNS = 7;
+let aiHistory = [];        // { role, content }[]
+let aiTurnCount = 0;
+
+function aiResetHistory() {
+    aiHistory = [];
+    aiTurnCount = 0;
+}
+
 async function aiGenerate() {
     const input = document.getElementById('aiPromptInput');
     const btn = document.getElementById('aiGenerateBtn');
@@ -1174,6 +1186,20 @@ async function aiGenerate() {
             `Include the notification script tag written as a literal HTML script element with src="../js/notification.js" placed before any other scripts when push notifications are used, and use push(seconds, "message"); only without redefining it, invoke only when user asks for push notifications` +
             `Always add a padding-top of 20px to all sites.`;
 
+        // Build user message — on first turn include current code as context
+        const currentCode = app.editor.getValue();
+        const userContent = aiTurnCount === 0
+            ? `Write ${langName} code for: ${prompt}`
+            : `Current code:
+\`\`\`
+${currentCode}
+\`\`\`
+
+Follow-up request: ${prompt}`;
+
+        // Push user turn into history
+        aiHistory.push({ role: 'user', content: userContent });
+
         const response = await fetch('https://freeaiapi-k79wwbhb.manus.space/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1181,7 +1207,7 @@ async function aiGenerate() {
                 model: 'openai',
                 messages: [
                     { role: 'system', content: systemPrompt },
-                    { role: 'user', content: `Write ${langName} code for: ${prompt}` }
+                    ...aiHistory
                 ]
             })
         });
@@ -1195,23 +1221,58 @@ async function aiGenerate() {
 
         if (!code) throw new Error('Empty response from AI');
 
-        // Type code into editor character-by-character
+        // Load full code at once so Monaco tokenizes once (perfect highlighting),
+        // then mask unwritten lines with a cover decoration for real typewriter feel.
         hide();
-        app.editor.setValue('');
-        let i = 0;
-        const delay = Math.max(1, Math.min(6, Math.floor(2500 / code.length)));
+        const model = app.editor.getModel();
+        model.setValue(code);
+        app.editor.setScrollTop(0);
+
+        const totalLines = model.getLineCount();
+        const BATCH = Math.max(1, Math.ceil(totalLines / 300));
+        let visibleLine = 0;
+        let coverIds = [];
+
+        // Build the cover: a full-line decoration that paints editor background
+        // over every line below visibleLine, hiding them visually.
+        const COVER_STYLE = 'typewriter-cover';
+        if (!document.getElementById('typewriter-cover-style')) {
+            const s = document.createElement('style');
+            s.id = 'typewriter-cover-style';
+            // We use ::after on the line to paint over it with the editor bg color
+            s.textContent = `.${COVER_STYLE} { opacity: 0 !important; }`;
+            document.head.appendChild(s);
+        }
+
+        function applyMask(upToLine) {
+            // Remove old decorations
+            coverIds = app.editor.deltaDecorations(coverIds, upToLine < totalLines ? [{
+                range: new monaco.Range(upToLine + 1, 1, totalLines, 1),
+                options: {
+                    isWholeLine: true,
+                    className: COVER_STYLE,
+                    inlineClassName: COVER_STYLE
+                }
+            }] : []);
+        }
+
+        applyMask(0);
 
         function typeNext() {
-            if (i <= code.length) {
-                app.editor.setValue(code.slice(0, i));
-                const lineCount = app.editor.getModel().getLineCount();
-                app.editor.revealLine(lineCount);
-                i++;
-                setTimeout(typeNext, delay);
+            if (visibleLine < totalLines) {
+                visibleLine = Math.min(visibleLine + BATCH, totalLines);
+                applyMask(visibleLine);
+                app.editor.revealLine(visibleLine);
+                setTimeout(typeNext, 8);
             } else {
-                // Persist into project files
+                // Clear mask fully
+                coverIds = app.editor.deltaDecorations(coverIds, []);
                 app.saveFileContent();
                 app.updatePreview();
+
+                // Store assistant reply in history
+                aiHistory.push({ role: 'assistant', content: code });
+                aiTurnCount++;
                 show('Generation completed!', 2000);
                 input.value = '';
             }
