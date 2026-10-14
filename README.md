@@ -91,5 +91,5 @@ For questions, support, or collaboration requests, please contact:
 ---
 
 <p align="center">
-  Project discontinuted due to lack of users. 
+  Project discontinuted due to lack of users. Cl should still work fine.
 </p>
