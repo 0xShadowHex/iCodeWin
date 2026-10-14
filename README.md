@@ -91,5 +91,5 @@ For questions, support, or collaboration requests, please contact:
 ---
 
 <p align="center">
-  Made with ❤️ for the iOS development community
+  Project discontinuted due to lack of users. 
 </p>
